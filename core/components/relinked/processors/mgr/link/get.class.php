@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Get an Item
+ * Get a Link
  */
-class reLinkedItemGetProcessor extends modObjectGetProcessor {
-	public $objectType = 'reLinkedItem';
-	public $classKey = 'reLinkedItem';
+class rldLinkGetProcessor extends modObjectGetProcessor {
+	public $objectType = 'rldLink';
+	public $classKey = 'rldLink';
 	public $languageTopics = array('relinked:default');
 	//public $permission = 'view';
 
@@ -26,4 +26,4 @@ class reLinkedItemGetProcessor extends modObjectGetProcessor {
 
 }
 
-return 'reLinkedItemGetProcessor';
+return 'rldLinkGetProcessor';

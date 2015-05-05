@@ -5,6 +5,13 @@ reLinked.utils.renderBoolean = function (value, props, row) {
 		: String.format('<span class="red">{0}</span>', _('no'));
 }
 
+reLinked.utils.renderResource = function (value, props, row) {
+    
+    return value
+		? value
+		: String.format('<span class="red">{0}</span>', _('no'));
+}
+
 reLinked.utils.getMenu = function (actions, grid, selected) {
 	var menu = [];
 	var cls, icon, title, action = '';

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Enable an Item
+ * Disable a Link
  */
-class reLinkedItemEnableProcessor extends modObjectProcessor {
-	public $objectType = 'reLinkedItem';
-	public $classKey = 'reLinkedItem';
+class rldLinkDisableProcessor extends modObjectProcessor {
+	public $objectType = 'rldLink';
+	public $classKey = 'rldLink';
 	public $languageTopics = array('relinked');
 	//public $permission = 'save';
 
@@ -24,12 +24,12 @@ class reLinkedItemEnableProcessor extends modObjectProcessor {
 		}
 
 		foreach ($ids as $id) {
-			/** @var reLinkedItem $object */
+			/** @var rldLink $object */
 			if (!$object = $this->modx->getObject($this->classKey, $id)) {
 				return $this->failure($this->modx->lexicon('relinked_item_err_nf'));
 			}
 
-			$object->set('active', true);
+			$object->set('active', false);
 			$object->save();
 		}
 
@@ -38,4 +38,4 @@ class reLinkedItemEnableProcessor extends modObjectProcessor {
 
 }
 
-return 'reLinkedItemEnableProcessor';
+return 'rldLinkDisableProcessor';

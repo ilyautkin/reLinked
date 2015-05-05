@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Update an Item
+ * Update a Link
  */
-class reLinkedItemUpdateProcessor extends modObjectUpdateProcessor {
-	public $objectType = 'reLinkedItem';
-	public $classKey = 'reLinkedItem';
+class rldLinkUpdateProcessor extends modObjectUpdateProcessor {
+	public $objectType = 'rldLink';
+	public $classKey = 'rldLink';
 	public $languageTopics = array('relinked');
 	//public $permission = 'save';
 
@@ -35,15 +35,8 @@ class reLinkedItemUpdateProcessor extends modObjectUpdateProcessor {
 			return $this->modx->lexicon('relinked_item_err_ns');
 		}
 
-		if (empty($name)) {
-			$this->modx->error->addField('name', $this->modx->lexicon('relinked_item_err_name'));
-		}
-		elseif ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $id))) {
-			$this->modx->error->addField('name', $this->modx->lexicon('relinked_item_err_ae'));
-		}
-
 		return parent::beforeSet();
 	}
 }
 
-return 'reLinkedItemUpdateProcessor';
+return 'rldLinkUpdateProcessor';

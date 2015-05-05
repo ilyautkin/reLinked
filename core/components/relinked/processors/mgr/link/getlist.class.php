@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Get a list of Items
+ * Get a list of Links
  */
-class reLinkedItemGetListProcessor extends modObjectGetListProcessor {
-	public $objectType = 'reLinkedItem';
-	public $classKey = 'reLinkedItem';
+class rldLinkGetListProcessor extends modObjectGetListProcessor {
+	public $objectType = 'rldLink';
+	public $classKey = 'rldLink';
 	public $defaultSortField = 'id';
 	public $defaultSortDirection = 'DESC';
 	//public $permission = 'list';
@@ -32,11 +32,19 @@ class reLinkedItemGetListProcessor extends modObjectGetListProcessor {
 	 * @return xPDOQuery
 	 */
 	public function prepareQueryBeforeCount(xPDOQuery $c) {
+        $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey).',
+                `rldResource`.`id` as `rid`, `rldResource`.`pagetitle` as `r_title`, `rldResource`.`uri` as `r_uri`,
+                `rldTarget`.`id` as `tid`, `rldTarget`.`pagetitle` as `t_title`, `rldTarget`.`uri` as `t_uri`');
+        $c->leftJoin('modResource', 'rldResource', array('`'.$this->classKey.'`.`resource` = `rldResource`.`id`'));
+        $c->leftJoin('modResource', 'rldTarget',   array('`'.$this->classKey.'`.`target` = `rldTarget`.`id`'));
 		$query = trim($this->getProperty('query'));
 		if ($query) {
 			$c->where(array(
-				'name:LIKE' => "%{$query}%",
-				'OR:description:LIKE' => "%{$query}%",
+				'page:LIKE' => "%{$query}%",
+                'OR:url:LIKE' => "%{$query}%",
+                'OR:r_uri:LIKE' => "%{$query}%",
+                'OR:t_uri:LIKE' => "%{$query}%",
+				'OR:anchor:LIKE' => "%{$query}%",
 			));
 		}
 
@@ -51,6 +59,13 @@ class reLinkedItemGetListProcessor extends modObjectGetListProcessor {
 	 */
 	public function prepareRow(xPDOObject $object) {
 		$array = $object->toArray();
+        if (!$array['r_title'] && $array['page']) {
+            $array['r_title'] = '<span class="red">'.$array["page"].'</span>';
+        }
+        if (!$array['t_title'] && $array['url']) {
+            $array['t_title'] = '<span class="red">'.$array["url"].'</span>';
+        }
+        
 		$array['actions'] = array();
 
 		// Edit
@@ -103,4 +118,4 @@ class reLinkedItemGetListProcessor extends modObjectGetListProcessor {
 
 }
 
-return 'reLinkedItemGetListProcessor';
+return 'rldLinkGetListProcessor';

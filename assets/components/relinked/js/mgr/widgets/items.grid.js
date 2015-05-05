@@ -10,7 +10,7 @@ reLinked.grid.Items = function (config) {
 		tbar: this.getTopBar(config),
 		sm: new Ext.grid.CheckboxSelectionModel(),
 		baseParams: {
-			action: 'mgr/item/getlist'
+			action: 'mgr/link/getlist'
 		},
 		listeners: {
 			rowDblClick: function (grid, rowIndex, e) {
@@ -84,7 +84,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 		MODx.Ajax.request({
 			url: this.config.url,
 			params: {
-				action: 'mgr/item/get',
+				action: 'mgr/link/get',
 				id: id
 			},
 			listeners: {
@@ -125,7 +125,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 				: _('relinked_item_remove_confirm'),
 			url: this.config.url,
 			params: {
-				action: 'mgr/item/remove',
+				action: 'mgr/link/remove',
 				ids: Ext.util.JSON.encode(ids),
 			},
 			listeners: {
@@ -147,7 +147,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 		MODx.Ajax.request({
 			url: this.config.url,
 			params: {
-				action: 'mgr/item/disable',
+				action: 'mgr/link/disable',
 				ids: Ext.util.JSON.encode(ids),
 			},
 			listeners: {
@@ -168,7 +168,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 		MODx.Ajax.request({
 			url: this.config.url,
 			params: {
-				action: 'mgr/item/enable',
+				action: 'mgr/link/enable',
 				ids: Ext.util.JSON.encode(ids),
 			},
 			listeners: {
@@ -182,7 +182,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 	},
 
 	getFields: function (config) {
-		return ['id', 'name', 'description', 'active', 'actions'];
+		return ['id', 'page', 'r_title', 'url', 't_title', 'anchor', 'position', 'active', 'actions'];
 	},
 
 	getColumns: function (config) {
@@ -190,29 +190,51 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			header: _('relinked_item_id'),
 			dataIndex: 'id',
 			sortable: true,
-			width: 70
-		}, {
-			header: _('relinked_item_name'),
-			dataIndex: 'name',
+			width: 12
+		}, /*{
+    		header: _('relinked_item_page'),
+			dataIndex: 'page',
 			sortable: true,
-			width: 200,
+			width: 100,
+		}, */{
+    		header: _('relinked_item_resource'),
+			dataIndex: 'r_title',
+            renderer: reLinked.utils.renderResource,
+			sortable: true,
+			width: 100
+		}, /*{
+    		header: _('relinked_item_url'),
+			dataIndex: 'url',
+			sortable: true,
+			width: 100,
+		}, */{
+    		header: _('relinked_item_target'),
+			dataIndex: 't_title',
+            renderer: reLinked.utils.renderResource,
+			sortable: true,
+			width: 100
 		}, {
-			header: _('relinked_item_description'),
-			dataIndex: 'description',
+			header: _('relinked_item_anchor'),
+			dataIndex: 'anchor',
 			sortable: false,
-			width: 250,
+			width: 100,
 		}, {
-			header: _('relinked_item_active'),
+    		header: _('relinked_item_position'),
+			dataIndex: 'position',
+			sortable: true,
+			width: 30,
+		}, {
+    		header: _('relinked_item_active'),
 			dataIndex: 'active',
 			renderer: reLinked.utils.renderBoolean,
 			sortable: true,
-			width: 100,
+			width: 20,
 		}, {
 			header: _('relinked_grid_actions'),
 			dataIndex: 'actions',
 			renderer: reLinked.utils.renderActions,
 			sortable: false,
-			width: 100,
+			width: 40,
 			id: 'actions'
 		}];
 	},

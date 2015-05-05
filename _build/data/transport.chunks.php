@@ -3,10 +3,10 @@
 $chunks = array();
 
 $tmp = array(
-	'tpl.reLinked.item' => array(
+	/*'tpl.reLinked.item' => array(
 		'file' => 'item',
 		'description' => '',
-	),
+	),*/
 );
 
 // Save chunks for setup options

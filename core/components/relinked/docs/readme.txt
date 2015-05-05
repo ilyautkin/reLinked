@@ -1,10 +1,10 @@
 --------------------
 reLinked
 --------------------
-Author: John Doe <john@doe.com>
+Author: Ilya Utkin <ilyautkin@mail.ru>
 --------------------
 
-A basic Extra for MODx Revolution.
+MODX addon for linking resources through site.
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
-http://github.com/username/reLinked/issues
+https://github.com/ilyautkin/reLinked

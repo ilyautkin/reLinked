@@ -3,10 +3,10 @@
 $snippets = array();
 
 $tmp = array(
-	'reLinked' => array(
+	/*'reLinked' => array(
 		'file' => 'relinked',
 		'description' => '',
-	),
+	),*/
 );
 
 foreach ($tmp as $k => $v) {
