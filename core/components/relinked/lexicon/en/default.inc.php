@@ -30,6 +30,7 @@ $_lang['relinked_items_remove_confirm'] = 'Are you sure you want to remove this 
 
 $_lang['relinked_item_err_name'] = 'You must specify the name of Link.';
 $_lang['relinked_item_err_page'] = 'You must specify the page for Link.';
+$_lang['relinked_item_err_url'] = 'You must specify the url for Link.';
 $_lang['relinked_item_err_ae'] = 'An Item already exists with that Link.';
 $_lang['relinked_item_err_nf'] = 'Link not found.';
 $_lang['relinked_item_err_ns'] = 'Link not specified.';
@@ -38,3 +39,7 @@ $_lang['relinked_item_err_save'] = 'An error occurred while trying to save the L
 
 $_lang['relinked_grid_search'] = 'Search';
 $_lang['relinked_grid_actions'] = 'Actions';
+$_lang['relinked_import'] = 'Import';
+$_lang['relinked_import_msg'] = 'Paste or upload your CSV-input.';
+$_lang['relinked_import_start'] = 'Start import';
+$_lang['relinked_import_file_select'] = 'Select CSV file';

@@ -38,5 +38,23 @@ class reLinked {
 		$this->modx->addPackage('relinked', $this->config['modelPath']);
 		$this->modx->lexicon->load('relinked:default');
 	}
+    
+    public function findResource($url) {
+        $urlArr = parse_url($url);
+        if (substr($urlArr['path'],0,1) == '/') {
+            $urlArr['path'] = substr($urlArr['path'],1);
+        }
+        $site_url = $urlArr['scheme'].'://'.$urlArr['host'].'/';
+        if ($ctxObject = $this->modx->getObject('modContextSetting', array('key' => 'site_url', 'value' => $site_url))) {
+            $ctx = $ctxObject->get('context_key');
+        } else {
+            $ctx = 'web';
+        }
+        $resourceId = $this->modx->findResource($urlArr['path'], $ctx);
+        if ($resourceId === false) {
+            $resourceId = 0;
+        }
+        return $resourceId;
+    }
 
 }

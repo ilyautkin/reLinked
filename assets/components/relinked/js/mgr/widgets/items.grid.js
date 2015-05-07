@@ -228,13 +228,13 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			dataIndex: 'active',
 			renderer: reLinked.utils.renderBoolean,
 			sortable: true,
-			width: 20,
+			width: 30,
 		}, {
 			header: _('relinked_grid_actions'),
 			dataIndex: 'actions',
 			renderer: reLinked.utils.renderActions,
 			sortable: false,
-			width: 40,
+			width: 45,
 			id: 'actions'
 		}];
 	},

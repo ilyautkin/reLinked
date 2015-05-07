@@ -4,7 +4,7 @@
  * Get a list of Links
  */
 class rldLinkGetListProcessor extends modObjectGetListProcessor {
-	public $objectType = 'rldLink';
+    public $objectType = 'rldLink';
 	public $classKey = 'rldLink';
 	public $defaultSortField = 'id';
 	public $defaultSortDirection = 'DESC';
@@ -37,17 +37,18 @@ class rldLinkGetListProcessor extends modObjectGetListProcessor {
                 `rldTarget`.`id` as `tid`, `rldTarget`.`pagetitle` as `t_title`, `rldTarget`.`uri` as `t_uri`');
         $c->leftJoin('modResource', 'rldResource', array('`'.$this->classKey.'`.`resource` = `rldResource`.`id`'));
         $c->leftJoin('modResource', 'rldTarget',   array('`'.$this->classKey.'`.`target` = `rldTarget`.`id`'));
-		$query = trim($this->getProperty('query'));
-		if ($query) {
+        $query = trim($this->getProperty('query'));
+    	if ($query) {
 			$c->where(array(
 				'page:LIKE' => "%{$query}%",
                 'OR:url:LIKE' => "%{$query}%",
-                'OR:r_uri:LIKE' => "%{$query}%",
-                'OR:t_uri:LIKE' => "%{$query}%",
-				'OR:anchor:LIKE' => "%{$query}%",
+                'OR:anchor:LIKE' => "%{$query}%",
+                'OR:rldResource.pagetitle:LIKE' => "%{$query}%",
+                'OR:rldTarget.pagetitle:LIKE' => "%{$query}%",
+                'OR:rldResource.uri:LIKE' => "%{$query}%",
+                'OR:rldTarget.uri:LIKE' => "%{$query}%",
 			));
 		}
-
 		return $c;
 	}
 

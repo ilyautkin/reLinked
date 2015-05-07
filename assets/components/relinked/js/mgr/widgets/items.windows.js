@@ -1,5 +1,5 @@
 reLinked.window.CreateItem = function (config) {
-	config = config || {};
+    config = config || {};
 	if (!config.id) {
 		config.id = 'relinked-item-window-create';
 	}
@@ -21,31 +21,33 @@ reLinked.window.CreateItem = function (config) {
 Ext.extend(reLinked.window.CreateItem, MODx.Window, {
 
 	getFields: function (config) {
-		return [{
+		return [/*{
 			xtype: 'textfield',
 			fieldLabel: _('relinked_item_page'),
 			name: 'page',
 			id: config.id + '-page',
 			anchor: '99%',
 			allowBlank: false,
-		}, {
+		}, */{
             xtype: 'modx-combo-resource',
             fieldLabel: _('relinked_item_resource'),
             name: 'resource',
+            hiddenName: 'resource',
             id: config.id + '-resource',
 			anchor: '99%',
 			allowBlank: true,
-        }, {
+        }, /*{
             xtype: 'textfield',
             fieldLabel: _('relinked_item_url'),
             name: 'url',
             id: config.id + '-url',
 			anchor: '99%',
 			allowBlank: false,
-        }, {
+        }, */{
             xtype: 'modx-combo-resource',
             fieldLabel: _('relinked_item_target'),
             name: 'target',
+            hiddenName: 'target',
             id: config.id + '-target',
 			anchor: '99%',
 			allowBlank: true,
@@ -98,42 +100,54 @@ reLinked.window.UpdateItem = function (config) {
 Ext.extend(reLinked.window.UpdateItem, MODx.Window, {
 
 	getFields: function (config) {
-		return [{
-			xtype: 'hidden',
+        console.log(config.record.object);
+        var windowFields = [{
+    		xtype: 'hidden',
 			name: 'id',
 			id: config.id + '-id',
-		}, {
-            xtype: 'textfield',
-			fieldLabel: _('relinked_item_page'),
-			name: 'page',
-			id: config.id + '-page',
-			anchor: '99%',
-			allowBlank: false,
-		}, {
-            xtype: 'modx-combo-resource',
-            fieldLabel: _('relinked_item_resource'),
-            name: 'resource',
-            hiddenName: 'resource',
-            id: config.id + '-resource',
-			anchor: '99%',
-			allowBlank: false,
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('relinked_item_url'),
-            name: 'url',
-            id: config.id + '-url',
-			anchor: '99%',
-			allowBlank: false,
-        }, {
-            xtype: 'modx-combo-resource',
-            fieldLabel: _('relinked_item_target'),
-            name: 'target',
-            hiddenName: 'target',
-            id: config.id + '-target',
-			anchor: '99%',
-			allowBlank: false,
-        }, {
-			xtype: 'textfield',
+		}];
+        if (config.record.object.resource == 0) {
+            windowFields.push({
+                xtype: 'textfield',
+        		fieldLabel: _('relinked_item_page'),
+    			name: 'page',
+    			id: config.id + '-page',
+    			anchor: '99%',
+    			allowBlank: false,
+    		});
+        } else {
+            windowFields.push({
+                xtype: 'modx-combo-resource',
+                fieldLabel: _('relinked_item_resource'),
+                name: 'resource',
+                hiddenName: 'resource',
+                id: config.id + '-resource',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        }
+        if (config.record.object.target == 0) {
+            windowFields.push({
+                xtype: 'textfield',
+                fieldLabel: _('relinked_item_url'),
+                name: 'url',
+                id: config.id + '-url',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        } else {
+            windowFields.push({
+                xtype: 'modx-combo-resource',
+                fieldLabel: _('relinked_item_target'),
+                name: 'target',
+                hiddenName: 'target',
+                id: config.id + '-target',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        }
+        windowFields.push({
+    		xtype: 'textfield',
 			fieldLabel: _('relinked_item_anchor'),
 			name: 'anchor',
 			id: config.id + '-anchor',
@@ -151,7 +165,8 @@ Ext.extend(reLinked.window.UpdateItem, MODx.Window, {
 			name: 'active',
 			id: config.id + '-active',
 			checked: true,
-		}];
+		});
+		return windowFields;
 	}
 
 });
