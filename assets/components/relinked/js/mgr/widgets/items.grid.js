@@ -26,7 +26,7 @@ reLinked.grid.Items = function (config) {
 			scrollOffset: 0,
 			getRowClass: function (rec, ri, p) {
 				return !rec.data.active
-					? 'relinked-row-disabled'
+					? 'relinked-grid-row-disabled'
 					: '';
 			}
 		},
@@ -224,7 +224,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			sortable: true,
 			width: 30,
 		}, {
-    		header: _('relinked_item_active'),
+            header: _('relinked_item_active'),
 			dataIndex: 'active',
 			renderer: reLinked.utils.renderBoolean,
 			sortable: true,
@@ -241,7 +241,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 
 	getTopBar: function (config) {
 		return [{
-			text: '<i class="icon icon-plus">&nbsp;' + _('relinked_item_create'),
+			text: '<i class="icon icon-plus"></i>&nbsp;&nbsp;' + _('relinked_item_create'),
 			handler: this.createItem,
 			scope: this
 		}, '->', {
