@@ -57,6 +57,29 @@ class rldLinkUpdateProcessor extends modObjectUpdateProcessor {
 			$this->modx->error->addField('url', $this->modx->lexicon('relinked_item_err_url'));
 			$this->modx->error->addField('target', $this->modx->lexicon('relinked_item_err_url'));
 		}
+        
+        if (!$this->hasErrors()) {
+            $find = array('id:!=' => $id);
+            if ($this->getProperty('resource')) {
+                $find['resource'] = $this->getProperty('resource');
+                $pagefield = 'resource';
+            } else {
+                $find['page'] = $this->getProperty('page');
+                $pagefield = 'page';
+            }
+            if ($this->getProperty('target')) {
+                $find['target'] = $this->getProperty('target');
+                $urlfield = 'target';
+            } else {
+                $find['url'] = $this->getProperty('url');
+                $urlfield = 'url';
+            }
+            // Добавить проверку на resource == target
+            if($this->modx->getCount($this->classKey, $find)) {
+            	$this->modx->error->addField($pagefield, $this->modx->lexicon('relinked_item_err_ae'));
+        		$this->modx->error->addField($urlfield,  $this->modx->lexicon('relinked_item_err_ae'));
+    		}
+        }
 
 		return parent::beforeSet();
 	}

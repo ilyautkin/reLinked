@@ -47,10 +47,22 @@ class reLinked {
         $site_url = $urlArr['scheme'].'://'.$urlArr['host'].'/';
         if ($ctxObject = $this->modx->getObject('modContextSetting', array('key' => 'site_url', 'value' => $site_url))) {
             $ctx = $ctxObject->get('context_key');
+            if ($url == $site_url) {
+                if ($site_start = $this->modx->getObject('modContextSetting', array('context_key' => $ctx, 'key' => 'site_start'))) {
+                    $resourceId = $site_start->get('value');
+                }
+            }
         } else {
             $ctx = 'web';
+            if ($url == $site_url) {
+                if ($site_url == $this->modx->getOption('site_url')) {
+                    $resourceId = $this->modx->getOption('site_start');
+                }
+            }
         }
-        $resourceId = $this->modx->findResource($urlArr['path'], $ctx);
+        if (!$resourceId) {
+            $resourceId = $this->modx->findResource($urlArr['path'], $ctx);
+        }
         if ($resourceId === false) {
             $resourceId = 0;
         }

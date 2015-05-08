@@ -100,7 +100,7 @@ reLinked.window.UpdateItem = function (config) {
 Ext.extend(reLinked.window.UpdateItem, MODx.Window, {
 
 	getFields: function (config) {
-        console.log(config.record.object);
+        //console.log(config.record.object);
         var windowFields = [{
     		xtype: 'hidden',
 			name: 'id',
