@@ -57,14 +57,14 @@ Ext.extend(reLinked.window.CreateItem, MODx.Window, {
 			name: 'anchor',
 			id: config.id + '-anchor',
 			anchor: '99%'
-		}, {
+		}, /*{
             xtype: 'textfield',
             fieldLabel: _('relinked_item_position'),
             name: 'position',
             id: config.id + '-position',
 			anchor: '99%',
-			allowBlank: false,
-        }, {
+			allowBlank: true,
+        },*/ {
 			xtype: 'xcheckbox',
 			boxLabel: _('relinked_item_active'),
 			name: 'active',

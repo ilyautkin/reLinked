@@ -190,7 +190,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			header: _('relinked_item_id'),
 			dataIndex: 'id',
 			sortable: true,
-			width: 12
+			width: 20
 		}, /*{
     		header: _('relinked_item_page'),
 			dataIndex: 'page',

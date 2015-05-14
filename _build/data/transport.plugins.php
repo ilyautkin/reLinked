@@ -2,15 +2,14 @@
 
 $plugins = array();
 
-$tmp = array(/*
+$tmp = array(
 	'reLinked' => array(
 		'file' => 'relinked',
 		'description' => '',
 		'events' => array(
-			'OnManagerPageInit' => array()
+			'OnWebPagePrerender' => array()
 		)
 	)
-	*/
 );
 
 foreach ($tmp as $k => $v) {

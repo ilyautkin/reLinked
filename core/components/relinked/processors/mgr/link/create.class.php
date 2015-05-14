@@ -4,7 +4,7 @@
  * Create a Link
  */
 class rldLinkCreateProcessor extends modObjectCreateProcessor {
-	public $objectType = 'rldLink';
+    public $objectType = 'rldLink';
 	public $classKey = 'rldLink';
 	public $languageTopics = array('relinked');
 	//public $permission = 'create';
@@ -19,6 +19,35 @@ class rldLinkCreateProcessor extends modObjectCreateProcessor {
             $resourceId = $reLinked->findResource($page);
             $this->setProperty('resource', $resourceId);
         }
+        
+        if ($this->getProperty('resource')) {
+            if ($resource = $this->modx->getObject('modResource', $this->getProperty('resource'))) {
+                $poscount = count(explode('</p>', $resource->get('content')));
+                $links = $this->modx->getCollection('rldLink', array('resource' => $resourceId));
+                $positions = array();
+                foreach($links as $link) {
+                    if (isset($positions[$link->get('position')])) {
+                        $positions[$link->get('position')]++;
+                    } else {
+                        $positions[$link->get('position')] = 1;
+                    }
+                }
+                if (!empty($positions)) {
+                    ksort($positions);
+                    reset($positions);
+                    foreach ($positions as $position => $posLinkCount) {
+                        if ($posLinkCount <= rand(2, 6) && $position < $poscount) {
+                            $this->setProperty('position', $position);
+                            break;
+                        }
+                    }
+                }
+                if ($this->getProperty('position', false) == false) {
+                    $this->setProperty('position', rand(1, $poscount));
+                }
+            }
+        }
+        
         $page = $this->getProperty('resource')
               ? $this->getProperty('resource')
               : trim($this->getProperty('page'));
