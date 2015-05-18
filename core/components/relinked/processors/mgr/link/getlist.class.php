@@ -1,11 +1,11 @@
 <?php
-
+@ini_set('display_errors',1);
 /**
  * Get a list of Links
  */
 class rldLinkGetListProcessor extends modObjectGetListProcessor {
     public $objectType = 'rldLink';
-	public $classKey = 'rldLink';
+    public $classKey = 'rldLink';
 	public $defaultSortField = 'id';
 	public $defaultSortDirection = 'DESC';
 	//public $permission = 'list';
@@ -34,7 +34,8 @@ class rldLinkGetListProcessor extends modObjectGetListProcessor {
 	public function prepareQueryBeforeCount(xPDOQuery $c) {
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey).',
                 `rldResource`.`id` as `rid`, `rldResource`.`pagetitle` as `r_title`, `rldResource`.`uri` as `r_uri`,
-                `rldTarget`.`id` as `tid`, `rldTarget`.`pagetitle` as `t_title`, `rldTarget`.`uri` as `t_uri`');
+                `rldTarget`.`id` as `tid`, `rldTarget`.`pagetitle` as `t_title`, `rldTarget`.`uri` as `t_uri`,
+                `rldResource`.`context_key` as `r_context`, `rldTarget`.`context_key` as `t_context`');
         $c->leftJoin('modResource', 'rldResource', array('`'.$this->classKey.'`.`resource` = `rldResource`.`id`'));
         $c->leftJoin('modResource', 'rldTarget',   array('`'.$this->classKey.'`.`target` = `rldTarget`.`id`'));
         $query = trim($this->getProperty('query'));
@@ -47,6 +48,13 @@ class rldLinkGetListProcessor extends modObjectGetListProcessor {
                 'OR:rldTarget.pagetitle:LIKE' => "%{$query}%",
                 'OR:rldResource.uri:LIKE' => "%{$query}%",
                 'OR:rldTarget.uri:LIKE' => "%{$query}%",
+			));
+		}
+        $context = trim($this->getProperty('linkctx'));
+    	if ($context) {
+			$c->where(array(
+                'rldResource.context_key' => $context,
+                'OR:rldTarget.context_key:=' => $context
 			));
 		}
 		return $c;

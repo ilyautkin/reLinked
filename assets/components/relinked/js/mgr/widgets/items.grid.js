@@ -1,5 +1,5 @@
 reLinked.grid.Items = function (config) {
-	config = config || {};
+    config = config || {};
 	if (!config.id) {
 		config.id = 'relinked-grid-items';
 	}
@@ -245,6 +245,19 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			handler: this.createItem,
 			scope: this
 		}, '->', {
+            xtype: 'modx-combo-context',
+			name: 'context',
+			width: 200,
+			id: config.id + '-context-field',
+			emptyText: _('context'),
+			listeners: {
+				select: {
+					fn: function (tf) {
+					    this._contextFilter(tf);
+					}, scope: this
+				}
+			}
+		}, {
 			xtype: 'textfield',
 			name: 'query',
 			width: 200,
@@ -302,6 +315,12 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 		return ids;
 	},
 
+	_contextFilter: function (tf, nv, ov) {
+		this.getStore().baseParams.linkctx = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	},
+	
 	_doSearch: function (tf, nv, ov) {
 		this.getStore().baseParams.query = tf.getValue();
 		this.getBottomToolbar().changePage(1);
@@ -309,10 +328,34 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 	},
 
 	_clearSearch: function (btn, e) {
-		this.getStore().baseParams.query = '';
+		this.getStore().baseParams.query = this.getStore().baseParams.linkctx = '';
 		Ext.getCmp(this.config.id + '-search-field').setValue('');
+		Ext.getCmp(this.config.id + '-context-field').setValue('');
 		this.getBottomToolbar().changePage(1);
 		this.refresh();
 	}
 });
 Ext.reg('relinked-grid-items', reLinked.grid.Items);
+
+
+MODx.combo.Context = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        valueField: 'key'
+        ,displayField: 'key'
+        ,fields: ['key']
+        ,url: MODx.config.connectors_url+'resource/index.php'
+        ,baseParams: {
+                action: 'context/getlist'
+                ,exclude: 'mgr'
+                ,limit:0
+        }
+        ,tpl: new Ext.XTemplate('<tpl for=".">'
+            ,'<div class="x-combo-list-item">'
+            ,'<h4 class="modx-combo-title">{key}</h4>'
+            ,'</div></tpl>')
+    });
+    MODx.combo.Context.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.combo.Context,MODx.combo.ComboBox);
+Ext.reg('modx-combo-context',MODx.combo.Context);

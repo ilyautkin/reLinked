@@ -1,7 +1,7 @@
 <?php
 switch ($modx->event->name) {
     case 'OnWebPagePrerender':
-        $reLinked = $modx->getService('reLinked');
+
         /** @var array $scriptProperties */
         /** @var modExtra $modExtra */
         if (!$reLinked = $modx->getService('reLinked', 'reLinked', $modx->getOption('relinked_core_path', null, $modx->getOption('core_path') . 'components/relinked/') . 'model/relinked/', $scriptProperties)) {
@@ -25,7 +25,17 @@ switch ($modx->event->name) {
                     $content[] = '<p>'.implode(', ', $block).'</p>';
                 }
             }
-            $modx->resource->_output = str_replace($modx->resource->get('content'), implode('</p>', $content), $modx->resource->_output);
+            $chunk = $modx->newObject('modChunk');
+            $chunk->set('content', $modx->resource->get('content'));
+            $chunk->set('name', 'chunk');
+            $replace = $chunk->process();
+            
+            $chunk2 = $modx->newObject('modChunk');
+            $chunk2->set('name', 'chunk2');
+            $chunk2->set('content', implode('</p>', $content));
+            $replace2 = $chunk2->process();
+            
+            $modx->resource->_output = str_replace($replace, $replace2, $modx->resource->_output);
         }
         break;
     default:
