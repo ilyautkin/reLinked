@@ -46,3 +46,5 @@ $_lang['relinked_import_file_select'] = 'Выберите CSV-файл';
 $_lang['relinked_import_fileparsefailed'] = 'Не удалось распарсить файл. Ошибка на строке ';
 $_lang['relinked_import_fileuploadfailed'] = 'Файл не загружен';
 $_lang['relinked_import_file_parsed'] = 'Файл обработан, приступаю к импорту. Количество строк: ';
+
+$_lang['relinked_page_introtext'] = 'Здесь вы можете редактировать позиции ссылок на странице';

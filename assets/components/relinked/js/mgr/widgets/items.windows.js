@@ -1,6 +1,6 @@
 reLinked.window.CreateItem = function (config) {
     config = config || {};
-	if (!config.id) {
+    if (!config.id) {
 		config.id = 'relinked-item-window-create';
 	}
 	Ext.applyIf(config, {
@@ -21,14 +21,14 @@ reLinked.window.CreateItem = function (config) {
 Ext.extend(reLinked.window.CreateItem, MODx.Window, {
 
 	getFields: function (config) {
-		return [/*{
+		return [{
 			xtype: 'textfield',
 			fieldLabel: _('relinked_item_page'),
 			name: 'page',
 			id: config.id + '-page',
 			anchor: '99%',
 			allowBlank: false,
-		}, */{
+		}, /*{
             xtype: 'modx-combo-resource',
             fieldLabel: _('relinked_item_resource'),
             name: 'resource',
@@ -36,14 +36,14 @@ Ext.extend(reLinked.window.CreateItem, MODx.Window, {
             id: config.id + '-resource',
 			anchor: '99%',
 			allowBlank: true,
-        }, /*{
+        }, */{
             xtype: 'textfield',
             fieldLabel: _('relinked_item_url'),
             name: 'url',
             id: config.id + '-url',
 			anchor: '99%',
 			allowBlank: false,
-        }, */{
+        }, /*{
             xtype: 'modx-combo-resource',
             fieldLabel: _('relinked_item_target'),
             name: 'target',
@@ -51,7 +51,7 @@ Ext.extend(reLinked.window.CreateItem, MODx.Window, {
             id: config.id + '-target',
 			anchor: '99%',
 			allowBlank: true,
-        }, {
+        }, */{
 			xtype: 'textfield',
 			fieldLabel: _('relinked_item_anchor'),
 			name: 'anchor',
@@ -75,6 +75,85 @@ Ext.extend(reLinked.window.CreateItem, MODx.Window, {
 
 });
 Ext.reg('relinked-item-window-create', reLinked.window.CreateItem);
+
+
+reLinked.window.CreatePosition = function (config) {
+    config = config || {};
+    if (!config.id) {
+		config.id = 'relinked-position-window-create';
+	}
+	Ext.applyIf(config, {
+		title: _('relinked_item_create'),
+		width: 550,
+		autoHeight: true,
+		url: reLinked.config.connector_url,
+		action: 'mgr/link/create',
+		fields: this.getFields(config),
+		keys: [{
+			key: Ext.EventObject.ENTER, shift: true, fn: function () {
+				this.submit()
+			}, scope: this
+		}]
+	});
+	reLinked.window.CreatePosition.superclass.constructor.call(this, config);
+};
+Ext.extend(reLinked.window.CreatePosition, MODx.Window, {
+
+	getFields: function (config) {
+		return [{
+			xtype: 'textfield',
+			fieldLabel: _('relinked_item_page'),
+			name: 'page',
+			id: config.id + '-page',
+			anchor: '99%',
+			allowBlank: false,
+		}, /*{
+            xtype: 'modx-combo-resource',
+            fieldLabel: _('relinked_item_resource'),
+            name: 'resource',
+            hiddenName: 'resource',
+            id: config.id + '-resource',
+			anchor: '99%',
+			allowBlank: true,
+        }, */{
+            xtype: 'textfield',
+            fieldLabel: _('relinked_item_url'),
+            name: 'url',
+            id: config.id + '-url',
+			anchor: '99%',
+			allowBlank: false,
+        }, /*{
+            xtype: 'modx-combo-resource',
+            fieldLabel: _('relinked_item_target'),
+            name: 'target',
+            hiddenName: 'target',
+            id: config.id + '-target',
+			anchor: '99%',
+			allowBlank: true,
+        }, */{
+			xtype: 'textfield',
+			fieldLabel: _('relinked_item_anchor'),
+			name: 'anchor',
+			id: config.id + '-anchor',
+			anchor: '99%'
+		}, /*{
+            xtype: 'textfield',
+            fieldLabel: _('relinked_item_position'),
+            name: 'position',
+            id: config.id + '-position',
+			anchor: '99%',
+			allowBlank: true,
+        },*/ {
+			xtype: 'xcheckbox',
+			boxLabel: _('relinked_item_active'),
+			name: 'active',
+			id: config.id + '-active',
+			checked: true,
+		}];
+	}
+
+});
+Ext.reg('relinked-position-window-create', reLinked.window.CreatePosition);
 
 
 reLinked.window.UpdateItem = function (config) {
@@ -171,6 +250,102 @@ Ext.extend(reLinked.window.UpdateItem, MODx.Window, {
 
 });
 Ext.reg('relinked-item-window-update', reLinked.window.UpdateItem);
+
+
+reLinked.window.UpdatePosition = function (config) {
+	config = config || {};
+	if (!config.id) {
+		config.id = 'relinked-position-window-update';
+	}
+	Ext.applyIf(config, {
+		title: _('relinked_item_update'),
+		width: 550,
+		autoHeight: true,
+		url: reLinked.config.connector_url,
+		action: 'mgr/link/update',
+		fields: this.getFields(config),
+		keys: [{
+			key: Ext.EventObject.ENTER, shift: true, fn: function () {
+				this.submit()
+			}, scope: this
+		}]
+	});
+	reLinked.window.UpdatePosition.superclass.constructor.call(this, config);
+};
+Ext.extend(reLinked.window.UpdatePosition, MODx.Window, {
+
+	getFields: function (config) {
+        //console.log(config.record.object);
+        var windowFields = [{
+    		xtype: 'hidden',
+			name: 'id',
+			id: config.id + '-id',
+		}];
+        if (config.record.object.resource == 0) {
+            windowFields.push({
+                xtype: 'textfield',
+        		fieldLabel: _('relinked_item_page'),
+    			name: 'page',
+    			id: config.id + '-page',
+    			anchor: '99%',
+    			allowBlank: false,
+    		});
+        } else {
+            windowFields.push({
+                xtype: 'modx-combo-resource',
+                fieldLabel: _('relinked_item_resource'),
+                name: 'resource',
+                hiddenName: 'resource',
+                id: config.id + '-resource',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        }
+        if (config.record.object.target == 0) {
+            windowFields.push({
+                xtype: 'textfield',
+                fieldLabel: _('relinked_item_url'),
+                name: 'url',
+                id: config.id + '-url',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        } else {
+            windowFields.push({
+                xtype: 'modx-combo-resource',
+                fieldLabel: _('relinked_item_target'),
+                name: 'target',
+                hiddenName: 'target',
+                id: config.id + '-target',
+        		anchor: '99%',
+    			allowBlank: false,
+            });
+        }
+        windowFields.push({
+    		xtype: 'textfield',
+			fieldLabel: _('relinked_item_anchor'),
+			name: 'anchor',
+			id: config.id + '-anchor',
+			anchor: '99%'
+		}, {
+            xtype: 'textfield',
+            fieldLabel: _('relinked_item_position'),
+            name: 'position',
+            id: config.id + '-position',
+			anchor: '99%',
+			allowBlank: false,
+        }, {
+			xtype: 'xcheckbox',
+			boxLabel: _('relinked_item_active'),
+			name: 'active',
+			id: config.id + '-active',
+			checked: true,
+		});
+		return windowFields;
+	}
+
+});
+Ext.reg('relinked-position-window-update', reLinked.window.UpdatePosition);
 
 MODx.combo.Resource = function(config) {
     config = config || {};

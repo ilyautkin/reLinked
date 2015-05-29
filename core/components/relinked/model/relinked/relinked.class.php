@@ -69,4 +69,47 @@ class reLinked {
         return $resourceId;
     }
 
+    /**
+	 * Compares MODX version
+	 *
+	 * @param string $version
+	 * @param string $dir
+	 *
+	 * @return bool
+	 */
+	public function systemVersion($version = '2.3.0', $dir = '>=') {
+		$this->modx->getVersionData();
+		return !empty($this->modx->version) && version_compare($this->modx->version['full_version'], $version, $dir);
+	}
+
+
+    /**
+	 * @param modManagerController $controller
+	 * @param modResource $resource
+	 */
+	public function loadManagerFiles(modManagerController $controller, modResource $resource) {
+		$modx23 = (int)$this->systemVersion();
+		$cssUrl = $this->config['cssUrl'] . 'mgr/';
+		$jsUrl = $this->config['jsUrl'] . 'mgr/';
+		$properties = $resource->getProperties('relinked');
+
+		$controller->addLexiconTopic('relinked:default');
+		$controller->addJavascript($jsUrl . 'relinked.js');
+		$controller->addLastJavascript($jsUrl . 'misc/utils.js');
+		$controller->addCss($cssUrl . 'main.css');
+		if (!$modx23) {
+			$controller->addCss($cssUrl . 'font-awesome.min.css');
+		}
+    	$controller->addHtml('
+		<script type="text/javascript">
+			MODx.modx23 = ' . $modx23 . ';
+			reLinked.config = ' . $this->modx->toJSON($this->config) . ';
+			reLinked.config.resID = ' . $resource->id . ';
+            reLinked.config.connector_url = "' . $this->config['connectorUrl'] . '";
+		</script>', true);
+		$controller->addLastJavascript($jsUrl . 'widgets/items.windows.js');
+		$controller->addLastJavascript($jsUrl . 'widgets/positions.grid.js');
+		$controller->addLastJavascript($jsUrl . 'widgets/tab.js');
+	}
+
 }

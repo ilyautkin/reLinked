@@ -46,3 +46,5 @@ $_lang['relinked_import_file_select'] = 'Select CSV file';
 $_lang['relinked_import_fileparsefailed'] = 'File parse failed. Row: ';
 $_lang['relinked_import_fileuploadfailed'] = 'File upload failed';
 $_lang['relinked_import_file_parsed'] = 'File parsed. Starting import. Count of rows: ';
+
+$_lang['relinked_page_introtext'] = 'Здесь вы можете редактировать позиции ссылок на странице';

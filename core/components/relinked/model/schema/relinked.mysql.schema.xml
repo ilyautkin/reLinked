@@ -10,6 +10,7 @@
 		<field key="anchor"   dbtype="text"                     phptype="text"    null="true"  default=""/>
 		<field key="active"   dbtype="tinyint"  precision="1"   phptype="boolean" null="false" default="1" />
 		<field key="position" dbtype="tinyint"  precision="2"   phptype="integer" null="false" default="0" />
+        <field key="createdon" dbtype="timestamp"               phptype="timestamp" null="false" default="CURRENT_TIMESTAMP" />
         
 		<index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
 			<column key="resource" length="" collation="A" null="false" />

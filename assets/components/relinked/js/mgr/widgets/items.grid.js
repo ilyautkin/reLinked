@@ -182,7 +182,7 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 	},
 
 	getFields: function (config) {
-		return ['id', 'page', 'r_title', 'url', 't_title', 'anchor', 'position', 'active', 'actions'];
+		return ['id', 'page', 'r_title', 'url', 't_title', 'anchor', 'createdon', 'position', 'active', 'actions'];
 	},
 
 	getColumns: function (config) {
@@ -217,6 +217,11 @@ Ext.extend(reLinked.grid.Items, MODx.grid.Grid, {
 			header: _('relinked_item_anchor'),
 			dataIndex: 'anchor',
 			sortable: false,
+			width: 100,
+		}, {
+			header: _('createdon'),
+			dataIndex: 'createdon',
+			sortable: true,
 			width: 100,
 		}, {
     		header: _('relinked_item_position'),

@@ -7,7 +7,8 @@ $tmp = array(
 		'file' => 'relinked',
 		'description' => '',
 		'events' => array(
-			'OnWebPagePrerender' => array()
+			'OnWebPagePrerender' => array(),
+			'OnDocFormRender' => array()
 		)
 	)
 );

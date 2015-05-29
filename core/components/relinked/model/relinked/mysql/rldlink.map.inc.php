@@ -13,6 +13,7 @@ $xpdo_meta_map['rldLink']= array (
     'anchor' => '',
     'active' => 1,
     'position' => 0,
+    'createdon' => 'CURRENT_TIMESTAMP',
   ),
   'fieldMeta' => 
   array (
@@ -72,6 +73,13 @@ $xpdo_meta_map['rldLink']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'createdon' => 
+    array (
+      'dbtype' => 'timestamp',
+      'phptype' => 'timestamp',
+      'null' => false,
+      'default' => 'CURRENT_TIMESTAMP',
     ),
   ),
   'indexes' => 
